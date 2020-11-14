@@ -13,7 +13,7 @@ char msg[] = "I'm a Terminal: \n";
 int incomingByte = 0; // for incoming serial data
 
 void enablePulse() {
-  digitalWrite(E, HIGH); delayMicroseconds(100); digitalWrite(E, LOW);delayMicroseconds(50);
+  digitalWrite(E, HIGH); delayMicroseconds(100000); digitalWrite(E, LOW);delayMicroseconds(50000);
 }
 
 void writeTDR(byte txByte) {
@@ -51,16 +51,14 @@ void setup() {
   //pinMode(CS2, OUTPUT); digitalWrite(CS2,HIGH);
   pinMode(E,   OUTPUT); digitalWrite(E, LOW);
   pinMode(RS,  OUTPUT); pinMode(IRQ, INPUT); pinMode(RW,  OUTPUT);
-  //
-  digitalWrite(RW, HIGH);
   // master reset
-  digitalWrite(RS, LOW);
+  digitalWrite(RS, LOW);digitalWrite(RW, LOW);
   for (i=0; i < 8; i++) {pinMode(DIO[i], OUTPUT);};
   digitalWrite(DIO[0], HIGH); digitalWrite(DIO[1], HIGH);
   digitalWrite(DIO[2], HIGH);  digitalWrite(DIO[3], LOW);  digitalWrite(DIO[4], HIGH); // WordSelect: 8 bits + 1 Stop     
-  digitalWrite(DIO[5], LOW);  digitalWrite(DIO[6], LOW);  digitalWrite(DIO[8], HIGH);   
-  digitalWrite(RW, LOW);
+  digitalWrite(DIO[5], LOW);  digitalWrite(DIO[6], LOW);  digitalWrite(DIO[7], HIGH);   
   enablePulse();
+  delay(1000);
   // set divide by 16
   digitalWrite(RS, LOW); digitalWrite(RW, LOW);
   digitalWrite(DIO[0], LOW); digitalWrite(DIO[1], HIGH);
